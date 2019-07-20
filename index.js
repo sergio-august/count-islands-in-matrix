@@ -2,9 +2,9 @@ const VISITED = 2
 
 /** Mark island cells
     @function
-    @param {Number} r - row index of the cell in matrix
-    @param {Number} c - column index of the cell in matrix
-    @return {undefined}
+    @param {number} r - row index of the cell in matrix
+    @param {number} c - column index of the cell in matrix
+    @param {Array<Array<1|0>>} matrix - binary matrix
 */
 function markIsland(r, c, matrix) {
 	// mark current cell as visited
@@ -31,9 +31,10 @@ function markIsland(r, c, matrix) {
 
 /** Check if specified cell is within matrix and contains value of 1
     @function
-    @param {Number} r - row index of the cell in matrix
-    @param {Number} c - column index of the cell in matrix
-    @return {undefined}
+    @param {number} r - row index of the cell in matrix
+    @param {number} c - column index of the cell in matrix
+    @param {Array<Array<1|0>>} matrix - binary matrix
+    @return {boolean}
 */
 function isSoil(r, c, matrix) {
 	return (
@@ -45,24 +46,24 @@ function isSoil(r, c, matrix) {
 	)
 }
 
-/** Calculate islands amount in specified 2D matrix
+/** Calculate islands amount in specified 2D binary matrix
     @function
-    @param {Array<Array<1|0>>} matrix - row index of the cell in matrix
-    @return {Number} - islandsCount
+    @param {Array<Array<1|0>>} matrix - binary matrix
+    @return {number}
 */
 function findIslandsCount(matrix) {
-	let islandsCount = 0
+	let result = 0
 
 	for (let r = 0; r < matrix.length; r++) {
 		for (let c = 0; c < matrix[r].length; c++) {
-			if (matrix[r][c] !== VISITED && matrix[r][c] === 1) {
+			if (matrix[r][c] === 1) {
 				markIsland(r, c, matrix)
-				islandsCount++
+				result++
 			}
 		}
 	}
 
-	return islandsCount
+	return result
 }
 
 module.exports = findIslandsCount
