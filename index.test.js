@@ -3,6 +3,7 @@ const testData = require('./data')
 
 const COLOR = {
 	red: '\x1b[31m',
+	yellow: '\x1b[33m',
 	green: '\x1b[32m',
 	reset: '\x1b[0m'
 }
@@ -14,9 +15,9 @@ function printMatrix(matrix) {
 }
 
 /** Generate 2D binary matrix
-    @param {number} rows - rows number, by default 3
-    @param {number} columns - columns number, by default 3
-    @return {number[][]} 2D matrix with 0 or 1 in cells
+    @param {number} [rows=3] - rows number
+    @param {number} [columns=3] - columns number
+    @return {Array<Array<(0|1)>>} 2D matrix with 0 or 1 in cells
 */
 function generateMatrix(rows = 3, columns = 3) {
 	const matrix = []
@@ -35,9 +36,9 @@ console.log('TESTING PREDEFINED DATA')
 let dataPassed = 0
 let dataFailed = 0
 testData.forEach(({ matrix, count }, index) => {
-	computedCount = findIslandsCount(matrix)
 	console.log(`---------------\nindex: ${index},\nmatrix:`)
 	printMatrix(matrix)
+	computedCount = findIslandsCount(matrix)
 	const passed = count === computedCount
 	const text = `count: ${computedCount},\nexpected: ${count},\npassed: ${passed}`
 	if (passed) {
@@ -48,15 +49,19 @@ testData.forEach(({ matrix, count }, index) => {
 		dataFailed++
 	}
 })
-console.log(
-	`\nPASSED: ${dataPassed}\n${COLOR.red}FAILED: ${dataFailed}${COLOR.reset}`
-)
+
+console.log(`
+PASSED: ${dataPassed}
+${dataFailed ? COLOR.red : ''}FAILED: ${dataFailed}${COLOR.reset}
+`)
 
 // Test random data
-console.log(`Test 5 random matrix (please check manually):`)
+console.log(`\nTest 5 random matrix (please check manually):`)
 for (let i = 0; i < 5; i++) {
-	console.log('---')
+	console.log('---\nmatrix:')
 	const matrix = generateMatrix()
 	printMatrix(matrix)
-	console.log('count:', findIslandsCount(matrix))
+	console.log(
+		`${COLOR.yellow}count: ${findIslandsCount(matrix)}${COLOR.reset}`
+	)
 }
